@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0a090c;
+  --color-foreground: #f4eef2;
+  --color-card: #16131a;
+  --color-card-foreground: #f4eef2;
+  --color-popover: #1c181f;
+  --color-popover-foreground: #f4eef2;
+  --color-primary: #d4a0ae;
+  --color-primary-foreground: #1a1216;
+  --color-secondary: #211c24;
+  --color-secondary-foreground: #f4eef2;
+  --color-muted: #211c24;
+  --color-muted-foreground: #a89aa3;
+  --color-accent: #d4a0ae;
+  --color-accent-foreground: #1a1216;
+  --color-destructive: #c07a7a;
+  --color-destructive-foreground: #1a1216;
+  --color-border: #2c2730;
+  --color-input: #2c2730;
+  --color-ring: #d4a0ae;
+  --color-paper: #f3ebe0;
+  --color-paper-foreground: #2a211c;
+  --color-paper-muted: #7a6e64;
+  --color-yes: #3f6b52;
+  --color-yes-foreground: #eaf3ee;
+  --color-no: #8f3d3d;
+  --color-no-foreground: #f8ecec;
+  --color-envelope: #c9b09a;
+  --color-envelope-flap: #b89b84;
+
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius: 0.75rem;
+
+  --text-display: clamp(2.4rem, 1.1rem + 5.5vw, 4.8rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.03em;
+  --text-title: clamp(1.6rem, 1.1rem + 1.8vw, 2.6rem);
+  --text-title--line-height: 1.15;
+  --text-lead: clamp(1.05rem, 0.96rem + 0.4vw, 1.2rem);
+  --text-lead--line-height: 1.55;
+
+  --shadow-border: 0 0 0 1px rgba(244, 238, 242, 0.08);
+  --shadow-border-hover: 0 0 0 1px rgba(244, 238, 242, 0.14);
+  --shadow-soft: 0 24px 60px -28px rgba(0, 0, 0, 0.7);
+  --shadow-note: 0 18px 40px -20px rgba(0, 0, 0, 0.55);
+
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-primary) 35%, transparent);
+    color: var(--color-foreground);
+  }
+}
+
+@keyframes envelope-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes letter-out {
+  from {
+    transform: translateY(42%);
+  }
+  to {
+    transform: translateY(-18%);
+  }
+}
+
+@keyframes flap-open {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(188deg);
+  }
+}
+
+@keyframes shake-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translateY(-8px) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(220deg);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes cry-drift {
+  0% {
+    transform: translateY(-8vh) rotate(-8deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(110vh) rotate(12deg);
+    opacity: 0.15;
+  }
+}
+
+@keyframes hug-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.envelope-enter {
+  animation: envelope-rise 400ms var(--ease-smooth-out) both;
+}
+
+.envelope-flap.open {
+  transform-origin: top center;
+  animation: flap-open 500ms var(--ease-smooth-out) both;
+}
+
+.envelope-letter.open {
+  animation: letter-out 700ms 160ms var(--ease-smooth-out) both;
+}
+
+.shake-error {
+  animation: shake-x 280ms var(--ease-out);
+}
+
+.egg-idle {
+  animation: pulse-soft 4.5s ease-in-out infinite;
+}
+
+.cry-flake {
+  animation: cry-drift linear infinite;
+}
+
+.hug-idle {
+  animation: hug-breathe 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .envelope-enter,
+  .envelope-flap.open,
+  .envelope-letter.open,
+  .shake-error,
+  .egg-idle,
+  .cry-flake,
+  .hug-idle {
+    animation: none !important;
+  }
+}
