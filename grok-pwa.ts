@@ -79,7 +79,11 @@ export default async function grokPwaMiddleware(
     });
   }
 
+  // The iOS Home Screen tutorial used to replace the whole page for
+  // ?install=1&platform=ios. That link is what people share, and on Android
+  // it showed "add to Home Screen" instead of the site. Always serve the app.
   if (
+    false &&
     isInstallQuery(urlWithQuery) &&
     isDocumentPath(path) &&
     acceptsHtml(event.req.headers.get("accept"))
